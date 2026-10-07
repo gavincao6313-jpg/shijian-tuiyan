@@ -396,7 +396,7 @@ footer p { margin: 0 0 6px; max-width: 60em; }
           <div class="engine-panel" id="engine-panel" hidden>
             <fieldset>
               <legend>用什么来推演</legend>
-              <label class="opt-line"><input type="radio" name="engine" value="demo"><span>示范模式<small>不接模型，只能回放三个预先推演好的示范。</small></span></label>
+              <label class="opt-line"><input type="radio" name="engine" value="demo"><span>示范模式<small>不接模型，只能回放四个预先推演好的示范。</small></span></label>
               <label class="opt-line"><input type="radio" name="engine" value="byok"><span>用我自己的 API Key<small>Key 只保存在你的浏览器里，直接发给 Anthropic；本页没有服务器，费用记在你的账户上。</small></span></label>
               <label class="opt-line"><input type="radio" name="engine" value="local" id="engine-local"><span>本机 Claude 订阅<small id="local-note">在本机运行 <code>python scripts/serve_local.py --background</code> 打开本页时可用，用你自己的 Claude 订阅额度。</small></span></label>
             </fieldset>
@@ -425,8 +425,8 @@ footer p { margin: 0 0 6px; max-width: 60em; }
 
   <section class="section" id="demo" aria-labelledby="demo-title">
     <div class="wrap">
-      <h2 id="demo-title">三个示范推演</h2>
-      <p class="intro">三个常见的抉择，每个都按同样的六步走完：立局、定母题、照镜、推演、换位、太史公曰。点开案例名，可以看到它在史书里的原貌。</p>
+      <h2 id="demo-title">四个示范推演</h2>
+      <p class="intro">四个常见的抉择，每个都按同样的六步走完：立局、定母题、照镜、推演、换位、太史公曰。点开案例名，可以看到它在史书里的原貌。</p>
       <div class="tabs" role="tablist" aria-label="选择一个抉择" id="tabs"></div>
       <div role="tabpanel" id="panel" tabindex="0"></div>
     </div>
@@ -511,7 +511,7 @@ const BOARD_HINT = {位: "你在结构里的位置", 力: "手里的资源", 人
 /* ---------- 推演演示 ---------- */
 const STEPS = [
   ["立局", "把处境拆成六个要素。拿不准的地方标成假设，不装作知道。"],
-  ["定母题", "对应案例库里的 16 类处境。一个决定常常同时落在两三类里。"],
+  ["定母题", `对应案例库里的 ${DATA.themes.length} 类处境。一个决定常常同时落在两三类里。`],
   ["照镜", "每个选项都配正例和反例，写清像在哪里、不像在哪里。不像的地方如果正是关键变量，这个案例就只作参考。"],
   ["推演", "每个选项走近期、中期、远期三段，写出它会像谁那样翻车，看到什么信号就该调整。"],
   ["换位", "站到关键他人的位置上，再推一遍。"],
@@ -591,7 +591,7 @@ function renderFilters() {
   $("#filters").innerHTML = [`<button class="chip" data-t="all" aria-pressed="${theme === "all"}">全部</button>`]
     .concat(DATA.themes.map(t => `<button class="chip" data-t="${t.code}" aria-pressed="${theme === t.code}">${esc(t.code + " " + t.name)}</button>`)).join("");
   const t = themeByCode[theme];
-  $("#theme-note").textContent = t ? `适用于：${t.modern}` : "16 类处境，覆盖去留、创业、合伙、站队、交班、转型等常见抉择。";
+  $("#theme-note").textContent = t ? `适用于：${t.modern}` : `${DATA.themes.length} 类处境，覆盖去留、创业、合伙、站队、交班、转型、占卜等常见抉择。`;
   const n = DATA.stats.grades;
   $("#grade-filters").innerHTML = `<span>史料等级</span>` + [`<button class="chip" data-g="all" aria-pressed="${grade === "all"}">不限</button>`]
     .concat(Object.entries(DATA.grades).map(([g, label]) => `<button class="chip" data-g="${g}" aria-pressed="${grade === g}">${g} ${label}（${n[g]}）</button>`)).join("");
